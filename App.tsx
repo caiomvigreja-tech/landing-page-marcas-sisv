@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+// @ts-ignore
+import securitySeals from './img/Selos-de-SEG.webp';
 
 // Chaves do Supabase fornecidas no código original
 const supabaseUrl = 'https://zzewgrcsppjefwypbzzn.supabase.co';
@@ -381,7 +383,7 @@ export default function App() {
               <h4 className="text-lg font-heading font-bold text-white mb-6">Ambiente Seguro</h4>
               <p className="text-sm text-slate-400 mb-4">Seus dados estão protegidos.</p>
               <div className="bg-white/5 p-4 rounded-xl border border-white/10 inline-block">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2025/04/Selos-de-SEG.webp" alt="Selos" className="h-14 object-contain opacity-90 hover:opacity-100 transition" loading="lazy" />
+                <img src={securitySeals} alt="Selos" className="h-14 object-contain opacity-90 hover:opacity-100 transition" loading="lazy" />
               </div>
             </div>
           </div>
