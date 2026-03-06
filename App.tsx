@@ -34,6 +34,28 @@ export default function App() {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
+  const formatWhatsapp = (value: string) => {
+    // Remove tudo que não é número
+    const numbers = value.replace(/\D/g, '');
+    
+    // Limita a 11 números (DDD + 9 dígitos)
+    const limited = numbers.substring(0, 11);
+    
+    // Aplica a máscara (00) 00000-0000
+    if (limited.length <= 2) {
+      return limited.length > 0 ? `(${limited}` : '';
+    }
+    if (limited.length <= 7) {
+      return `(${limited.substring(0, 2)}) ${limited.substring(2)}`;
+    }
+    return `(${limited.substring(0, 2)}) ${limited.substring(2, 7)}-${limited.substring(7)}`;
+  };
+
+  const handleWhatsappChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatWhatsapp(e.target.value);
+    setWhatsapp(formatted);
+  };
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -52,7 +74,7 @@ export default function App() {
             nome_cliente: clientName,
             nome_marca: brandName,
             ramo_atividade: businessType,
-            whatsapp: whatsapp,
+            whatsapp: whatsapp.replace(/\D/g, ''), // Envia apenas números para o Supabase
             status: 'entrada'
           },
         ]);
@@ -126,26 +148,25 @@ export default function App() {
                     <input type="text" required value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Ex: João da Silva" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">Nome da Marca / Empresa</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">Nome da Marca</label>
                     <input type="text" required value={brandName} onChange={(e) => setBrandName(e.target.value)} placeholder="Ex: Padaria Doce Sabor" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1">Ramo de Atuação</label>
                     <select required value={businessType} onChange={(e) => setBusinessType(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50">
                       <option value="" disabled>Selecione seu ramo...</option>
-                      <option value="Comércio (Varejo ou Atacado)">Comércio (Varejo ou Atacado)</option>
+                      <option value="Comércio e Varejo">Comércio e Varejo</option>
                       <option value="Prestação de Serviços">Prestação de Serviços</option>
-                      <option value="Indústria / Manufatura">Indústria / Manufatura</option>
+                      <option value="Infoprodutos e Conteúdo Digital">Infoprodutos e Conteúdo Digital</option>
+                      <option value="Tecnologia e Startups">Tecnologia e Startups</option>
+                      <option value="Indústria e Manufatura">Indústria e Manufatura</option>
                       <option value="Agronegócio">Agronegócio</option>
-                      <option value="E-commerce">E-commerce</option>
-                      <option value="Tecnologia / Startup / Fintech">Tecnologia / Startup / Fintech</option>
-                      <option value="Negócio Digital">Negócio Digital</option>
                       <option value="Outro">Outro</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1">Seu WhatsApp (com DDD)</label>
-                    <input type="tel" required value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} placeholder="(00) 90000-0000" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
+                    <input type="tel" required value={whatsapp} onChange={handleWhatsappChange} placeholder="(00) 90000-0000" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
                   </div>
                   <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-heading font-bold text-lg py-4 rounded-lg shadow-lg transition duration-300 flex items-center justify-center gap-2 mt-4 border-b-4 border-green-800 disabled:opacity-70">
                     {loading ? <i className="fas fa-spinner fa-spin mr-2"></i> : 'Consultar Disponibilidade'}
@@ -375,7 +396,7 @@ export default function App() {
                 </li>
                 <li className="flex flex-col md:flex-row items-center md:items-start gap-4">
                   <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center text-brand-orange shrink-0 border border-slate-700"><i className="fab fa-whatsapp text-xl"></i></div>
-                  <div className="text-center md:text-left"><span className="block text-xs text-slate-500 uppercase tracking-wider font-bold mb-1">WhatsApp</span><span className="font-bold text-white text-base">(17) 99999-9999</span></div>
+                  <div className="text-center md:text-left"><span className="block text-xs text-slate-500 uppercase tracking-wider font-bold mb-1">WhatsApp</span><span className="font-bold text-white text-base">11 91749-6887</span></div>
                 </li>
               </ul>
             </div>
@@ -388,14 +409,11 @@ export default function App() {
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8 mt-8 text-center md:flex md:justify-between items-center text-xs text-slate-500">
-            <p>&copy; 2025 Grupo SISV. Todos os direitos reservados.</p>
+            <p>&copy; 2026 Grupo SISV. Todos os direitos reservados.</p>
             <div className="mt-4 md:mt-0 flex gap-6 justify-center"><a href="#" className="hover:text-white transition">Termos de Uso</a><a href="#" className="hover:text-white transition">Política de Privacidade</a></div>
           </div>
         </div>
       </footer>
-
-      {/* WA Button */}
-      <a href="https://wa.me/5517999999999" target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition transform hover:scale-110 flex items-center justify-center w-16 h-16 border-2 border-white/20"><i className="fab fa-whatsapp text-3xl"></i></a>
     </>
   );
 }
