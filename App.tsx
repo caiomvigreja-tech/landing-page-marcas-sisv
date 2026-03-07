@@ -15,6 +15,8 @@ export default function App() {
   const [whatsapp, setWhatsapp] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   // Estados para o FAQ
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -454,10 +456,66 @@ export default function App() {
           </div>
           <div className="border-t border-slate-800 pt-8 mt-8 text-center md:flex md:justify-between items-center text-xs text-slate-500">
             <p>&copy; 2026 Grupo SISV. Todos os direitos reservados.</p>
-            <div className="mt-4 md:mt-0 flex gap-6 justify-center"><a href="#" className="hover:text-white transition">Termos de Uso</a><a href="#" className="hover:text-white transition">Política de Privacidade</a></div>
+            <div className="mt-4 md:mt-0 flex gap-6 justify-center">
+              <button onClick={() => setShowTerms(true)} className="hover:text-white transition cursor-pointer">Termos de Uso</button>
+              <button onClick={() => setShowPrivacy(true)} className="hover:text-white transition cursor-pointer">Política de Privacidade</button>
+            </div>
           </div>
         </div>
       </footer>
+
+      {/* Modals */}
+      {showTerms && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+          <div className="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm" onClick={() => setShowTerms(false)}></div>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto relative z-10 animate-fade-in-up">
+            <div className="sticky top-0 bg-white border-b border-slate-100 p-6 flex justify-between items-center">
+              <h3 className="font-heading text-xl font-bold text-brand-dark">Termos de Uso</h3>
+              <button onClick={() => setShowTerms(false)} className="text-slate-400 hover:text-brand-dark transition"><i className="fas fa-times text-xl"></i></button>
+            </div>
+            <div className="p-8 text-slate-600 text-sm leading-relaxed space-y-4">
+              <p>Bem-vindo ao Grupo SISV. Ao acessar nossa página, você concorda com os seguintes termos:</p>
+              <h4 className="font-bold text-brand-dark">1. Objeto</h4>
+              <p>Esta landing page tem como objetivo coletar dados de interessados em serviços de registro de marcas e patentes para fins de consultoria inicial gratuita.</p>
+              <h4 className="font-bold text-brand-dark">2. Uso do Serviço</h4>
+              <p>O preenchimento do formulário não garante o registro da marca, sendo apenas o primeiro passo para uma análise técnica realizada por nossos especialistas.</p>
+              <h4 className="font-bold text-brand-dark">3. Propriedade Intelectual</h4>
+              <p>Todo o conteúdo deste site (textos, design e logos) é de propriedade do Grupo SISV e não pode ser reproduzido sem autorização.</p>
+              <h4 className="font-bold text-brand-dark">4. Responsabilidade</h4>
+              <p>O usuário é responsável pela veracidade dos dados informados no formulário de contato.</p>
+            </div>
+            <div className="sticky bottom-0 bg-slate-50 p-6 border-t border-slate-100 flex justify-end">
+              <button onClick={() => setShowTerms(false)} className="bg-brand-dark text-white px-8 py-2 rounded-lg font-bold hover:bg-slate-800 transition">Fechar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showPrivacy && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+          <div className="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm" onClick={() => setShowPrivacy(false)}></div>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto relative z-10 animate-fade-in-up">
+            <div className="sticky top-0 bg-white border-b border-slate-100 p-6 flex justify-between items-center">
+              <h3 className="font-heading text-xl font-bold text-brand-dark">Política de Privacidade</h3>
+              <button onClick={() => setShowPrivacy(false)} className="text-slate-400 hover:text-brand-dark transition"><i className="fas fa-times text-xl"></i></button>
+            </div>
+            <div className="p-8 text-slate-600 text-sm leading-relaxed space-y-4">
+              <p>O Grupo SISV preza pela segurança dos seus dados em conformidade com a LGPD:</p>
+              <h4 className="font-bold text-brand-dark">1. Coleta de Dados</h4>
+              <p>Coletamos seu nome, nome da marca, ramo de atuação e WhatsApp apenas para realizar a consulta de disponibilidade e entrar em contato com o resultado.</p>
+              <h4 className="font-bold text-brand-dark">2. Uso das Informações</h4>
+              <p>Suas informações serão utilizadas exclusivamente por nossa equipe comercial e técnica. Não compartilhamos nem vendemos seus dados para terceiros.</p>
+              <h4 className="font-bold text-brand-dark">3. Armazenamento</h4>
+              <p>Seus dados são armazenados em servidores seguros através da tecnologia Supabase, com criptografia de ponta a ponta.</p>
+              <h4 className="font-bold text-brand-dark">4. Seus Direitos</h4>
+              <p>Você pode solicitar a exclusão total dos seus dados de nosso banco de dados a qualquer momento entrando em contato pelo e-mail <strong>contato@semissosemvendas.com.br</strong>.</p>
+            </div>
+            <div className="sticky bottom-0 bg-slate-50 p-6 border-t border-slate-100 flex justify-end">
+              <button onClick={() => setShowPrivacy(false)} className="bg-brand-dark text-white px-8 py-2 rounded-lg font-bold hover:bg-slate-800 transition">Fechar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
