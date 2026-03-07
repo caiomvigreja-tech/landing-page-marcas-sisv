@@ -1,7 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-// @ts-ignore
+
+import logo from './img/logo.webp';
+import heroImg1 from './img/hero-argument-1.webp';
+import heroImg2 from './img/hero-argument-2.webp';
+import heroImg3 from './img/hero-argument-3.webp';
+import teamImg from './img/team.webp';
 import securitySeals from './img/Selos-de-SEG.webp';
 
 // Chaves do Supabase fornecidas no código original
@@ -140,7 +145,7 @@ export default function App() {
       <header className="bg-brand-dark py-4 shadow-md relative z-50 sticky top-0">
         <nav className="max-w-6xl mx-auto px-6 flex justify-between items-center" role="navigation">
           <a href="#" className="flex items-center">
-            <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2025/06/logoNEGATIVO-1-768x225.png.webp" alt="Logo Sem Isso Sem Vendas" className="h-10 w-auto object-contain" width="136" height="40" fetchpriority="high" />
+            <img src={logo} alt="Logo Sem Isso Sem Vendas" className="h-10 w-auto object-contain" width="239" height="70" fetchpriority="high" />
           </a>
           <div className="hidden lg:flex items-center gap-8">
             <a href="#motivos" className="text-slate-300 hover:text-white font-medium transition text-sm">Por que registrar?</a>
@@ -230,7 +235,7 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100 group">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/CNPJ-nao-garante.webp" alt="Argumento 1 - CNPJ não garante exclusividade de marca" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
+                <img src={heroImg1} alt="Argumento 1 - CNPJ não garante exclusividade de marca" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
                 <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/5 transition duration-500"></div>
               </div>
             </div>
@@ -252,7 +257,7 @@ export default function App() {
             </div>
             <div className="order-1 md:order-2">
               <div className="relative rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100 group">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Existe-o-risco.webp" alt="Argumento 2 - Risco de perda da marca" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
+                <img src={heroImg2} alt="Argumento 2 - Risco de perda da marca" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
                 <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/5 transition duration-500"></div>
               </div>
             </div>
@@ -260,7 +265,7 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100 group">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Sua-marca-e-patrimonio.webp" alt="Argumento 3 - Marca como patrimônio empresarial" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
+                <img src={heroImg3} alt="Argumento 3 - Marca como patrimônio empresarial" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
                 <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/5 transition duration-500"></div>
               </div>
             </div>
@@ -351,7 +356,7 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
               <div className="bg-brand-gray h-96 rounded-2xl flex items-center justify-center border border-slate-200 relative overflow-hidden group shadow-lg">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Time-Marcas-e-Patentes-SISV.webp" alt="Equipe de especialistas SISV" className="w-full h-full object-cover" loading="lazy" width="600" height="400" />
+                <img src={teamImg} alt="Equipe de especialistas SISV" className="w-full h-full object-cover" loading="lazy" width="600" height="400" />
               </div>
             </div>
             <div className="order-1 md:order-2">
@@ -419,7 +424,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             <div className="text-center md:text-left flex flex-col items-center md:items-start">
-              <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2025/06/logoNEGATIVO-1-768x225.png.webp" alt="Logo Sem Isso Sem Vendas" className="h-12 mb-6 object-contain" loading="lazy" width="164" height="48" />
+              <img src={logo} alt="Logo Sem Isso Sem Vendas" className="h-12 mb-6 object-contain" loading="lazy" width="164" height="48" />
               <div className="text-sm text-slate-300 leading-relaxed">
                 <p className="font-bold text-white text-lg mb-2">Grupo Sem Isso Sem Vendas</p>
                 <p className="mb-1">CNPJ: 58.637.365/0001-01</p>
