@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@theme {
+  --color-brand-orange: #FF6600;
+  --color-brand-orange-dark: #cc5200;
+  --color-brand-dark: #1A2B40;
+  --color-brand-gray: #F4F6F8;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: "Montserrat", sans-serif;
+}
+
+@layer components {
+  /* Animações e Transições do FAQ */
+  .faq-content {
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+  .faq-content.active {
+    max-height: 200px;
+    opacity: 1;
+  }
+  .rotate-icon {
+    transition: transform 0.3s ease;
+  }
+  .rotate-icon.active {
+    transform: rotate(45deg);
+  }
+
+  /* Animação suave de entrada (Hero) */
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

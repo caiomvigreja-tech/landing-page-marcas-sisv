@@ -1,11 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
+import { createClient } from '@supabase/supabase-js';
 // @ts-ignore
 import securitySeals from './img/Selos-de-SEG.webp';
 
 // Chaves do Supabase fornecidas no código original
 const supabaseUrl = 'https://zzewgrcsppjefwypbzzn.supabase.co';
 const supabaseKey = 'sb_publishable_hjnxNLq_Lklwwu5Xf3RZ4w_AR6EcOv1';
+
+const supabaseClient = createClient(supabaseUrl, supabaseKey);
 
 export default function App() {
   // Estados para o formulário
@@ -20,18 +23,6 @@ export default function App() {
 
   // Estados para o FAQ
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-
-  // Cliente Supabase
-  const [supabaseClient, setSupabaseClient] = useState<any>(null);
-
-  useEffect(() => {
-    // @ts-ignore
-    if (window.supabase) {
-      // @ts-ignore
-      const client = window.supabase.createClient(supabaseUrl, supabaseKey);
-      setSupabaseClient(client);
-    }
-  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -146,10 +137,10 @@ export default function App() {
   return (
     <>
       {/* Navbar */}
-      <nav className="bg-brand-dark py-4 shadow-md relative z-50 sticky top-0">
-        <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
+      <header className="bg-brand-dark py-4 shadow-md relative z-50 sticky top-0">
+        <nav className="max-w-6xl mx-auto px-6 flex justify-between items-center" role="navigation">
           <a href="#" className="flex items-center">
-            <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2025/06/logoNEGATIVO-1-768x225.png.webp" alt="Logo Sem Isso Sem Vendas" className="h-10 w-auto object-contain" />
+            <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2025/06/logoNEGATIVO-1-768x225.png.webp" alt="Logo Sem Isso Sem Vendas" className="h-10 w-auto object-contain" width="136" height="40" fetchpriority="high" />
           </a>
           <div className="hidden lg:flex items-center gap-8">
             <a href="#motivos" className="text-slate-300 hover:text-white font-medium transition text-sm">Por que registrar?</a>
@@ -160,16 +151,18 @@ export default function App() {
           <a href="#formulario-topo" className="hidden md:inline-block bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-2 px-6 rounded-lg transition duration-300 shadow-md text-sm border border-green-500">
             Consultar Marca
           </a>
-        </div>
-      </nav>
+        </nav>
+      </header>
+
+      <main>
 
       {/* 1. Hero Section */}
       <header className="relative bg-brand-gray pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="z-10 fade-in-up md:pr-8">
-              <span className="inline-block py-1 px-3 rounded-full bg-orange-100 text-brand-orange font-bold text-sm md:text-base mb-4 tracking-wide uppercase border border-orange-200">
-                <i className="fas fa-check-circle mr-2"></i>Registro de Marca e Patentes
+              <span className="inline-block py-1 px-3 rounded-full bg-orange-100 text-brand-orange-dark font-bold text-sm md:text-base mb-4 tracking-wide uppercase border border-orange-200">
+                <i className="fas fa-check-circle mr-2" aria-hidden="true"></i>Registro de Marca e Patentes
               </span>
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold text-brand-dark leading-tight mb-6">
                 A sua marca pertence <span className="text-brand-orange italic">legalmente</span> a você?
@@ -190,16 +183,16 @@ export default function App() {
                 </div>
                 <form id="consultationForm" onSubmit={handleFormSubmit} className="space-y-4 text-left">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">Seu Nome</label>
-                    <input type="text" required value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Ex: João da Silva" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
+                    <label htmlFor="clientName" className="block text-sm font-semibold text-slate-700 mb-1">Seu Nome</label>
+                    <input id="clientName" name="clientName" type="text" required value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Ex: João da Silva" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">Nome da Marca</label>
-                    <input type="text" required value={brandName} onChange={(e) => setBrandName(e.target.value)} placeholder="Ex: Padaria Doce Sabor" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
+                    <label htmlFor="brandName" className="block text-sm font-semibold text-slate-700 mb-1">Nome da Marca</label>
+                    <input id="brandName" name="brandName" type="text" required value={brandName} onChange={(e) => setBrandName(e.target.value)} placeholder="Ex: Padaria Doce Sabor" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">Ramo de Atuação</label>
-                    <select required value={businessType} onChange={(e) => setBusinessType(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50">
+                    <label htmlFor="businessType" className="block text-sm font-semibold text-slate-700 mb-1">Ramo de Atuação</label>
+                    <select id="businessType" name="businessType" required value={businessType} onChange={(e) => setBusinessType(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50">
                       <option value="" disabled>Selecione seu ramo...</option>
                       <option value="Comércio e Varejo">Comércio e Varejo</option>
                       <option value="Prestação de Serviços">Prestação de Serviços</option>
@@ -211,12 +204,12 @@ export default function App() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">Seu WhatsApp (com DDD)</label>
-                    <input type="tel" required value={whatsapp} onChange={handleWhatsappChange} placeholder="(00) 90000-0000" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
+                    <label htmlFor="whatsapp" className="block text-sm font-semibold text-slate-700 mb-1">Seu WhatsApp (com DDD)</label>
+                    <input id="whatsapp" name="whatsapp" type="tel" required value={whatsapp} onChange={handleWhatsappChange} placeholder="(00) 90000-0000" className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition bg-slate-50" />
                   </div>
                   <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-heading font-bold text-lg py-4 rounded-lg shadow-lg transition duration-300 flex items-center justify-center gap-2 mt-4 border-b-4 border-green-800 disabled:opacity-70">
-                    {loading ? <i className="fas fa-spinner fa-spin mr-2"></i> : 'Consultar Disponibilidade'}
-                    {!loading && <i className="fas fa-search text-sm"></i>}
+                    {loading ? <i className="fas fa-spinner fa-spin mr-2" aria-hidden="true"></i> : 'Consultar Disponibilidade'}
+                    {!loading && <i className="fas fa-search text-sm" aria-hidden="true"></i>}
                   </button>
                   <p className="text-xs text-center text-slate-400 mt-2">
                     <i className="fas fa-lock mr-1"></i> Seus dados estão 100% seguros.
@@ -237,7 +230,7 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100 group">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/CNPJ-nao-garante.webp" alt="Argumento 1" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" />
+                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/CNPJ-nao-garante.webp" alt="Argumento 1 - CNPJ não garante exclusividade de marca" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
                 <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/5 transition duration-500"></div>
               </div>
             </div>
@@ -259,7 +252,7 @@ export default function App() {
             </div>
             <div className="order-1 md:order-2">
               <div className="relative rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100 group">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Existe-o-risco.webp" alt="Argumento 2" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" />
+                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Existe-o-risco.webp" alt="Argumento 2 - Risco de perda da marca" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
                 <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/5 transition duration-500"></div>
               </div>
             </div>
@@ -267,7 +260,7 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100 group">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Sua-marca-e-patrimonio.webp" alt="Argumento 3" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" />
+                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Sua-marca-e-patrimonio.webp" alt="Argumento 3 - Marca como patrimônio empresarial" className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105" loading="lazy" width="623" height="340" />
                 <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/5 transition duration-500"></div>
               </div>
             </div>
@@ -310,7 +303,7 @@ export default function App() {
                 <div className="w-24 h-24 mx-auto bg-brand-orange text-white border-4 border-orange-200 ring-4 ring-orange-100 rounded-full flex items-center justify-center text-4xl mb-6 shadow-lg">
                   <i className="fas fa-trophy"></i>
                 </div>
-                <h3 className="font-heading text-xl font-bold text-brand-orangeDark mb-3">3. Conquista do Registro</h3>
+                <h3 className="font-heading text-xl font-bold text-brand-orange-dark mb-3">3. Conquista do Registro</h3>
                 <p className="text-slate-700 text-sm font-medium">Vitória! Você recebe o Certificado Oficial do INPI e se torna, juridicamente, o único proprietário da sua marca.</p>
               </div>
             </div>
@@ -358,7 +351,7 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
               <div className="bg-brand-gray h-96 rounded-2xl flex items-center justify-center border border-slate-200 relative overflow-hidden group shadow-lg">
-                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Time-Marcas-e-Patentes-SISV.webp" alt="Equipe" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2026/01/Time-Marcas-e-Patentes-SISV.webp" alt="Equipe de especialistas SISV" className="w-full h-full object-cover" loading="lazy" width="600" height="400" />
               </div>
             </div>
             <div className="order-1 md:order-2">
@@ -393,7 +386,7 @@ export default function App() {
               <span className="text-brand-orange font-bold uppercase tracking-wider text-sm mb-2 block">Tira-dúvidas</span>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-brand-dark mb-6 leading-tight">Perguntas Frequentes</h2>
               <p className="text-slate-600 mb-8 leading-relaxed">Separamos as principais dúvidas de nossos clientes sobre o processo de registro.</p>
-              <a href="#formulario-topo" className="inline-flex items-center text-brand-orange font-bold hover:text-brand-orangeDark transition group">Falar com um especialista<i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i></a>
+              <a href="#formulario-topo" className="inline-flex items-center text-brand-orange font-bold hover:text-brand-orange-dark transition group">Falar com um especialista<i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i></a>
             </div>
             <div className="md:col-span-8">
               <div className="divide-y divide-slate-200 border-t border-b border-slate-200">
@@ -419,13 +412,14 @@ export default function App() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* 11. Rodapé */}
       <footer className="bg-brand-dark text-white pt-16 pb-8 border-t-4 border-brand-orange">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             <div className="text-center md:text-left flex flex-col items-center md:items-start">
-              <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2025/06/logoNEGATIVO-1-768x225.png.webp" alt="Logo" className="h-12 mb-6 object-contain" loading="lazy" />
+              <img src="https://www.semissosemvendas.com.br/wp-content/uploads/2025/06/logoNEGATIVO-1-768x225.png.webp" alt="Logo Sem Isso Sem Vendas" className="h-12 mb-6 object-contain" loading="lazy" width="164" height="48" />
               <div className="text-sm text-slate-300 leading-relaxed">
                 <p className="font-bold text-white text-lg mb-2">Grupo Sem Isso Sem Vendas</p>
                 <p className="mb-1">CNPJ: 58.637.365/0001-01</p>
@@ -450,7 +444,7 @@ export default function App() {
               <h4 className="text-lg font-heading font-bold text-white mb-6">Ambiente Seguro</h4>
               <p className="text-sm text-slate-400 mb-4">Seus dados estão protegidos.</p>
               <div className="bg-white/5 p-4 rounded-xl border border-white/10 inline-block">
-                <img src={securitySeals} alt="Selos" className="h-14 object-contain opacity-90 hover:opacity-100 transition" loading="lazy" />
+                <img src={securitySeals} alt="Selos de segurança e certificação" className="h-14 object-contain opacity-90 hover:opacity-100 transition" loading="lazy" width="200" height="56" />
               </div>
             </div>
           </div>
