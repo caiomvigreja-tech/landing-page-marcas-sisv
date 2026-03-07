@@ -14,6 +14,7 @@ export default function App() {
   const [businessType, setBusinessType] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Estados para o FAQ
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -81,7 +82,14 @@ export default function App() {
 
       if (error) throw error;
 
-      alert('✅ Solicitação recebida! Nossa equipe iniciará a pesquisa e entrará em contato em breve.');
+
+      // @ts-ignore
+      if (window.fbq) {
+        // @ts-ignore
+        window.fbq('track', 'Lead');
+      }
+
+      setIsSubmitted(true);
 
       // Limpa o formulário
       setClientName('');
@@ -96,6 +104,42 @@ export default function App() {
       setLoading(false);
     }
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen bg-brand-gray flex flex-col items-center justify-center px-6 py-12">
+        <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-10 text-center border border-slate-100 fade-in-up">
+          <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 text-4xl shadow-inner border border-green-200">
+            <i className="fas fa-check"></i>
+          </div>
+          <h1 className="font-heading text-3xl font-extrabold text-brand-dark mb-4">
+            Solicitação Enviada!
+          </h1>
+          <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+            Obrigado pelo seu interesse. Nossa equipe de especialistas já recebeu seus dados e iniciará a pesquisa de disponibilidade da sua marca agora mesmo.
+          </p>
+          <div className="bg-orange-50 rounded-xl p-6 mb-8 border border-orange-100 text-left">
+            <h4 className="font-bold text-brand-orange text-sm uppercase tracking-wider mb-2 flex items-center">
+              <i className="fas fa-clock mr-2"></i> Próximos Passos
+            </h4>
+            <p className="text-slate-700 text-sm leading-relaxed">
+              Em breve, um de nossos especialistas entrará em contato com você via <strong>WhatsApp</strong> para apresentar o diagnóstico completo da sua marca.
+            </p>
+          </div>
+          <button 
+            onClick={() => setIsSubmitted(false)}
+            className="w-full bg-brand-dark hover:bg-slate-800 text-white font-bold py-4 rounded-xl transition duration-300 shadow-lg flex items-center justify-center gap-2 group"
+          >
+            <i className="fas fa-arrow-left text-sm group-hover:-translate-x-1 transition-transform"></i>
+            Voltar para a Página Inicial
+          </button>
+        </div>
+        <p className="text-slate-400 text-xs mt-8">
+          &copy; 2026 Grupo SISV. Todos os direitos reservados.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
